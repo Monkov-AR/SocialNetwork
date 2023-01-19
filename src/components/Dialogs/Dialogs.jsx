@@ -2,7 +2,7 @@ import React from "react";
 import { NavLink } from "react-router-dom";
 import s from "./Dialogs.module.css"
 
-// функция для отрисвоки диалогов, каждый диалог это (реактовская NavLink)ссылка для перехода на подкатегорию
+// функции для отрисвоки диалогов и сообщений
 const DialogItem = (props) => {
     let path = "/dialogs/" + props.id;
     return (
@@ -14,7 +14,6 @@ const DialogItem = (props) => {
         </div>
     )
 }
-// функция для отрисовки сообщений на вход подаются сообщения эта хрень их отрисовывает
 const MessageItem = (props) => {
     return (
         <div>
@@ -22,28 +21,13 @@ const MessageItem = (props) => {
         </div>
     )
 }
-
-const Dialogs = () => {
-    // массивы с данными нихуя интересного
-    let dialogs = [
-        { id: 1, name: 'Valera' },
-        { id: 2, name: 'Andrew' },
-        { id: 3, name: 'Dima' },
-        { id: 4, name: 'Igor' },
-        { id: 5, name: 'Sveta' }
-    ]
-    let messages = [
-        { id: 1, message: 'hi' },
-        { id: 2, message: 'How are you?' },
-        { id: 3, message: 'Yo' },
-        { id: 4, message: 'Yo' },
-        { id: 5, message: 'Yo' }
-    ]
-
+const Dialogs = (props) => {
+    // debugger;
     // функция map
     // смысл в том создается новый массив из приобразованных старых элеентов и вызываются функции отрисовки(те что вверху)
-    let dialogsElements = dialogs.map(d => <DialogItem id={d.id} name={d.name} />);
-    let messagesElements = messages.map(m => <MessageItem id={m.id} message={m.message} />);
+    // по уроку у него dialogsPage(В app.js) называется state соответсвенно тут вызов будет props.state.messages (вроде как удобно) 
+    let dialogsElements = props.dialogsPage.dialogs.map(d => <DialogItem id={d.id} name={d.name} />);
+    let messagesElements = props.dialogsPage.messages.map(m => <MessageItem id={m.id} message={m.message} />);
 
     return (
         <div className={s.dialogs}>

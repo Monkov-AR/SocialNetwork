@@ -2,16 +2,15 @@ import React from "react";
 import s from "./Post.module.css";
 
 function Post(props) {
-    // debugger;
-    // console.log(props.message);
     return (
-        <div className={s.post}>
+        <div className={s.post}> 
             <div>
                 <div>
-                    <p>POST {props.number}</p>
+                    <p>POST {props.id}</p>
+                    {props.message}
                 </div>
                 <div>
-                    <span>like </span>
+                    <span>like {props.likes} </span>
                 </div>
             </div>
         </div>
