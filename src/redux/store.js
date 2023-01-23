@@ -1,3 +1,6 @@
+const ADD_POST = "ADD-POST";
+const UPDATE_NEW_POST_TEXT = "UPDATE-NEW-POST-TEXT";
+
 let store = {
     state: {
         profilePage: {
@@ -40,7 +43,7 @@ let store = {
     // метод dispatch(action) единственный метод управления хранилищем, 
     // ювнутри метода кидается action в котором есть поле type (что сделать)
     dispatch(action) {  //{type: "ADD-POST"}
-        if (action.type === "ADD-POST") {
+        if (action.type === ADD_POST) {
             let newPost = {
                 id: 5,
                 // раньше было что значение нового поста приходило из вне, 
@@ -52,13 +55,25 @@ let store = {
             // пушит в конец масива новую запись
             this.state.profilePage.posts.push(newPost);
             this.rerenderEntireTree(this.state);
-        } else if (action.type === "UPDATE-NEW-POST-TEXT") {
+        } else if (action.type === UPDATE_NEW_POST_TEXT) {
             this.state.profilePage.newPostText = action.newText;
             this.rerenderEntireTree(this.state);
         }
     }
 
 
+}
+
+export const addPostActionCreator = () =>{
+    return {
+        type:ADD_POST
+    }
+}
+export const updateNewPostTextActionCreator = (text) =>{
+    return {
+        type:UPDATE_NEW_POST_TEXT,
+        newText: text
+    }
 }
 export default store;
 window.store = store;
