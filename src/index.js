@@ -4,8 +4,7 @@ import './index.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
 
-import state, { subscrube } from './redux/state';
-import { addPost, updateNewPostText } from './redux/state';
+import store from './redux/store';
 
 
 
@@ -15,7 +14,9 @@ const root = ReactDOM.createRoot(document.getElementById('root'));
 let rerenderEntireTree = (state) => {
   root.render(
     <React.StrictMode>
-      <App state={state} addPost={addPost} updateNewPostText={updateNewPostText} />
+        {/* .bind(store) мутная хуета с callback'ами типа они вызываются от имени вызывающего, 
+        bind биндит вызов к оригинальному обьекту store */}
+      <App state={state} addPost={store.addPost.bind(store)} updateNewPostText={store.updateNewPostText.bind(store)} />
     </React.StrictMode>
   );
 
@@ -25,5 +26,5 @@ let rerenderEntireTree = (state) => {
   reportWebVitals();
 
 }
-rerenderEntireTree(state);
-subscrube(rerenderEntireTree);
+rerenderEntireTree(store.getState());
+store.subscrube(rerenderEntireTree);
