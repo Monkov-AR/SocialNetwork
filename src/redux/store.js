@@ -1,3 +1,5 @@
+import profileReducer from "./ProfileReducer";
+
 const ADD_POST = "ADD-POST";
 const UPDATE_NEW_POST_TEXT = "UPDATE-NEW-POST-TEXT";
 
@@ -43,22 +45,33 @@ let store = {
     // метод dispatch(action) единственный метод управления хранилищем, 
     // ювнутри метода кидается action в котором есть поле type (что сделать)
     dispatch(action) {  //{type: "ADD-POST"}
-        if (action.type === ADD_POST) {
-            let newPost = {
-                id: 5,
-                // раньше было что значение нового поста приходило из вне, 
-                // во второй редакции значение берется изнутри, 
-                // т.к оно меняется постоянно в реалтайме через  функцию updateNewPost
-                message: this.state.profilePage.newPostText,
-                likesCount: 0
-            };
-            // пушит в конец масива новую запись
-            this.state.profilePage.posts.push(newPost);
-            this.rerenderEntireTree(this.state);
-        } else if (action.type === UPDATE_NEW_POST_TEXT) {
-            this.state.profilePage.newPostText = action.newText;
-            this.rerenderEntireTree(this.state);
-        }
+        
+        // делегирование изменнение state'a редюсерам
+        this.state.profilePage = profileReducer(this.state.profilePage, action)
+        // другие редюсеры ....
+
+
+        // оповещение обсерверов
+        this.rerenderEntireTree(this.state);
+
+// -----------------------------------------------------
+        // старая логика без редюсеров
+        // if (action.type === ADD_POST) {
+        //     let newPost = {
+        //         id: 5,
+        //         // раньше было что значение нового поста приходило из вне, 
+        //         // во второй редакции значение берется изнутри, 
+        //         // т.к оно меняется постоянно в реалтайме через  функцию updateNewPost
+        //         message: this.state.profilePage.newPostText,
+        //         likesCount: 0
+        //     };
+        //     // пушит в конец масива новую запись
+        //     this.state.profilePage.posts.push(newPost);
+        //     this.rerenderEntireTree(this.state);
+        // } else if (action.type === UPDATE_NEW_POST_TEXT) {
+        //     this.state.profilePage.newPostText = action.newText;
+        //     this.rerenderEntireTree(this.state);
+        // }
     }
 
 
