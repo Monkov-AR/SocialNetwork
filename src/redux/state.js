@@ -1,4 +1,7 @@
-import { rerenderEntireTree } from "../render";
+// import { rerenderEntireTree } from "../render";
+let rerenderEntireTree = () =>{
+    console.log("state was changed")
+} 
 
 let state = {
     profilePage:{
@@ -7,7 +10,8 @@ let state = {
             { id: 2, message: 'second post', likesCount: 12 },
             { id: 3, message: '3th post', likesCount: 22 },
             { id: 4, message: '4th post', likesCount: 32 },
-        ]
+        ],
+        newPostText: "defaultPostText"
     },
     dialogsPage: {
         dialogs: [
@@ -28,14 +32,27 @@ let state = {
 
 }
 
-export let addPost = (postMessage) => {
+window.state = state;
+
+export const addPost = () => {
     let newPost = {
         id: 5,
-        message: postMessage,
+        // раньше было что значение нового поста приходило из вне, 
+        // во второй редакции значение берется изнутри, 
+        // т.к оно меняется постоянно в реалтайме через  функцию updateNewPost
+        message: state.profilePage.newPostText,
         likesCount: 0
     };
     // пушит в конец масива новую запись
     state.profilePage.posts.push(newPost);
     rerenderEntireTree(state);
 }
+export const updateNewPostText = (newText) => {
+    state.profilePage.newPostText=newText;
+    rerenderEntireTree(state);
+}
+export const subscrube = (observer) =>{
+    rerenderEntireTree = observer;
+}
+
 export default state;

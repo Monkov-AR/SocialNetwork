@@ -22,7 +22,7 @@ const App = (props) => {
             чтобы пробросить ему props используется кострукция ниже (она же и использована)
             <Route path="/dialogs" element={<Dialogs dialogs={dialogs} messages={messages}/>} /> 
             */}
-            <Route path="/profile" element={<Profile profilePage={props.state.profilePage} addPost={props.addPost}/>} />
+            <Route path="/profile" element={<Profile profilePage={props.state.profilePage} addPost={props.addPost} updateNewPostText={props.updateNewPostText}/>} />
             <Route path="/dialogs/*" element={<Dialogs dialogsPage={props.state.dialogsPage}/>} />
           </Routes>
         </div>
