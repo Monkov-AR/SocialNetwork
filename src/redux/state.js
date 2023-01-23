@@ -1,3 +1,4 @@
+import { rerenderEntireTree } from "../render";
 
 let state = {
     profilePage:{
@@ -28,12 +29,13 @@ let state = {
 }
 
 export let addPost = (postMessage) => {
-    debugger;
     let newPost = {
         id: 5,
         message: postMessage,
         likesCount: 0
     };
+    // пушит в конец масива новую запись
     state.profilePage.posts.push(newPost);
+    rerenderEntireTree(state);
 }
 export default state;

@@ -2,6 +2,7 @@ import React from "react";
 import s from "./MyPosts.module.css";
 import Post from "./Post/Post";
 
+// создаем ссылку на объект
 let newPostElement = React.createRef();
 
 
@@ -13,6 +14,7 @@ function MyPosts(props) {
         props.addPost(text);
     }
     let postsElements = props.posts.map(p => <Post id={p.id} message={p.message} likes={p.likesCount} />); 
+
     return (
         <div className={s.posts}>
             <h3>new post</h3>
