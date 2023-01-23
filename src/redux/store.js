@@ -27,32 +27,37 @@ let store = {
         }
 
     },
-    getState(){
+    getState() {
         return this.state;
     },
     rerenderEntireTree() {
         console.log("state was changed")
     },
-    addPost() {
-        let newPost = {
-            id: 5,
-            // раньше было что значение нового поста приходило из вне, 
-            // во второй редакции значение берется изнутри, 
-            // т.к оно меняется постоянно в реалтайме через  функцию updateNewPost
-            message: this.state.profilePage.newPostText,
-            likesCount: 0
-        };
-        // пушит в конец масива новую запись
-        this.state.profilePage.posts.push(newPost);
-        this.rerenderEntireTree(this.state);
-    },
-    updateNewPostText(newText){
-        this.state.profilePage.newPostText = newText;
-        this.rerenderEntireTree(this.state);
-    },
-    subscrube(observer){
+    subscrube(observer) {
         this.rerenderEntireTree = observer;
+    },
+
+    // метод dispatch(action) единственный метод управления хранилищем, 
+    // ювнутри метода кидается action в котором есть поле type (что сделать)
+    dispatch(action) {  //{type: "ADD-POST"}
+        if (action.type === "ADD-POST") {
+            let newPost = {
+                id: 5,
+                // раньше было что значение нового поста приходило из вне, 
+                // во второй редакции значение берется изнутри, 
+                // т.к оно меняется постоянно в реалтайме через  функцию updateNewPost
+                message: this.state.profilePage.newPostText,
+                likesCount: 0
+            };
+            // пушит в конец масива новую запись
+            this.state.profilePage.posts.push(newPost);
+            this.rerenderEntireTree(this.state);
+        } else if (action.type === "UPDATE-NEW-POST-TEXT") {
+            this.state.profilePage.newPostText = action.newText;
+            this.rerenderEntireTree(this.state);
+        }
     }
+
 
 }
 export default store;

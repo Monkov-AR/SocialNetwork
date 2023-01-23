@@ -10,13 +10,13 @@ function MyPosts(props) {
     let addPost = () => {
         // обращаемся к элементу этой ссылки (3)
         let text = newPostElement.current.value;
-        props.addPost();
+        props.dispatch({type:"ADD-POST"});
         props.updateNewPostText("");
     }
     let onPostChange = () =>{
         let text = newPostElement.current.value;
-        props.updateNewPostText(text);
-        // console.log(text);
+        props.dispatch({type:"UPDATE-NEW-POST-TEXT", newText:text});
+        // console.log(text);  
     }
     let postsElements = props.posts.map(p => <Post id={p.id} message={p.message} likes={p.likesCount} />); 
 

@@ -16,7 +16,7 @@ let rerenderEntireTree = (state) => {
     <React.StrictMode>
         {/* .bind(store) мутная хуета с callback'ами типа они вызываются от имени вызывающего, 
         bind биндит вызов к оригинальному обьекту store */}
-      <App state={state} addPost={store.addPost.bind(store)} updateNewPostText={store.updateNewPostText.bind(store)} />
+      <App state={state} dispatch={store.dispatch.bind(store)}/>
     </React.StrictMode>
   );
 
