@@ -4,7 +4,7 @@ import './index.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
 
-import store from './redux/store';
+import store from './redux/reduxStore';
 
 
 
@@ -12,11 +12,11 @@ import store from './redux/store';
 const root = ReactDOM.createRoot(document.getElementById('root'));
 
 let rerenderEntireTree = (state) => {
-  root.render(
+    root.render(
     <React.StrictMode>
         {/* .bind(store) мутная хуета с callback'ами типа они вызываются от имени вызывающего, 
         bind биндит вызов к оригинальному обьекту store */}
-      <App state={state} dispatch={store.dispatch.bind(store)}/>
+      <App state={state} dispatch={store.dispatch.bind(store) } store={store}/>
     </React.StrictMode>
   );
 
@@ -27,4 +27,8 @@ let rerenderEntireTree = (state) => {
 
 }
 rerenderEntireTree(store.getState());
-store.subscrube(rerenderEntireTree);
+
+store.subscribe(() => {
+    let state = store.getState();
+    rerenderEntireTree(state);
+});

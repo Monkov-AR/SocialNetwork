@@ -1,7 +1,8 @@
-import profileReducer from "./ProfileReducer";
+import profileReducer from "./profileReducer";
 
-const ADD_POST = "ADD-POST";
-const UPDATE_NEW_POST_TEXT = "UPDATE-NEW-POST-TEXT";
+// константы к старому коду
+// const ADD_POST = "ADD-POST";
+// const UPDATE_NEW_POST_TEXT = "UPDATE-NEW-POST-TEXT";
 
 let store = {
     state: {

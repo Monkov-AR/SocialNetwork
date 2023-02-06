@@ -10,6 +10,7 @@ import Dialogs from './components/Dialogs/Dialogs';
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
 
 const App = (props) => {
+  
   return (
     <BrowserRouter>
       <div className="app-wrapper">
@@ -17,12 +18,7 @@ const App = (props) => {
         <Navbar />
         <div className="app-wrapper-content">
           <Routes>
-            {/* 
-            в новых версиях react'a заменены оба комонента component и render на element
-            чтобы пробросить ему props используется кострукция ниже (она же и использована)
-            <Route path="/dialogs" element={<Dialogs dialogs={dialogs} messages={messages}/>} /> 
-            */}
-            <Route path="/profile" element={<Profile profilePage={props.state.profilePage} dispatch={props.dispatch} />} />
+            <Route path="/profile" element={<Profile store={props.store} />} />
             <Route path="/dialogs/*" element={<Dialogs dialogsPage={props.state.dialogsPage}/>} />
           </Routes>
         </div>
