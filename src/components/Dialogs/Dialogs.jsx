@@ -14,7 +14,8 @@ const DialogItem = (props) => {
         </div>
     )
 }
-const MessageItem = (props) => {
+const Message = (props) => {
+    
     return (
         <div>
             {`${props.id}  ${props.message}`}
@@ -22,12 +23,23 @@ const MessageItem = (props) => {
     )
 }
 const Dialogs = (props) => {
-    // debugger;
+    
+    let state = props.dialogsPage;
     // функция map
     // смысл в том создается новый массив из приобразованных старых элеентов и вызываются функции отрисовки(те что вверху)
     // по уроку у него dialogsPage(В app.js) называется state соответсвенно тут вызов будет props.state.messages (вроде как удобно) 
-    let dialogsElements = props.dialogsPage.dialogs.map(d => <DialogItem id={d.id} name={d.name} />);
-    let messagesElements = props.dialogsPage.messages.map(m => <MessageItem id={m.id} message={m.message} />);
+    let dialogsElements = state.dialogs.map(d => <DialogItem id={d.id} name={d.name} />);
+    let messagesElements = state.messages.map(m => <Message id={m.id} message={m.message} />)
+    let newMessageBody = state.newMessageBody;
+
+    let onSendMessageClick = () =>{
+        props.sendMessage();
+    }
+
+    let onNewMessageChange =(e) =>{
+        let body = e.target.value;
+        props.updateNewMessageBody(body);    
+    }
 
     return (
         <div className={s.dialogs}>

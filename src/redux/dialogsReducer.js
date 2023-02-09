@@ -1,4 +1,5 @@
-
+const UPDATE_NEW_MESSAGE_BODY = "UPDATE_NEW_MESSAGE_BODY"
+const SEND_MESSAGE = "SEND_MESSAGE"
 
 let intialState = {
     dialogs: [
@@ -18,10 +19,31 @@ let intialState = {
 }
 
 const dialogsReducer = (state = intialState, action) => {
+    // есть вариант не использовать эту переменную а сразу ретурнить новый объект "return {...state, другиеПоля}"
+    let stateCopy;
 
-
-
-    return state;
+    switch (action.type){
+        case UPDATE_NEW_MESSAGE_BODY:
+            stateCopy = {
+                ...state,
+                newMessageBody: action.body
+            };
+            return stateCopy;
+        
+        case SEND_MESSAGE:
+            let body = state.newMessageBody;
+            stateCopy = {
+                ...state,
+                newMessageBody: "",
+                messages: [...state.messages, {id: 6, message: body}]
+            }
+            
+            return stateCopy;
+        default:
+            return state;
+    }
 }
+export const sendMessageCreator = () => ({type:SEND_MESSAGE})
+export const updateNewMessageBodyCreator = (body) => ({type: UPDATE_NEW_MESSAGE_BODY, body: body})
 
 export default dialogsReducer;

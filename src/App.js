@@ -5,7 +5,8 @@ import Header from './components/Header/Header';
 import Navbar from './components/Navbar/Navbar';
 import Footer from './components/Footer/Footer';
 import Profile from './components/Profile/Profile';
-import Dialogs from './components/Dialogs/Dialogs';
+import UsersContainer from './components/Users/UsersContainer';
+import DialogsContainer from './components/Dialogs/DialogsContainer';
 
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
 
@@ -19,7 +20,8 @@ const App = (props) => {
         <div className="app-wrapper-content">
           <Routes>
             <Route path="/profile" element={<Profile />} />
-            <Route path="/dialogs/*" element={<Dialogs />} />
+            <Route path="/dialogs/*" element={<DialogsContainer />} />
+            <Route path="/users" element={<UsersContainer />} />
           </Routes>
         </div>
 

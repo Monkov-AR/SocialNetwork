@@ -1,7 +1,7 @@
 import React from "react";
 import { connect } from "react-redux";
-import { NavLink } from "react-router-dom";
-import s from "./Dialogs.module.css"
+import { sendMessageCreator, updateNewMessageBodyCreator } from "../../redux/dialogsReducer";
+import Dialogs from "./Dialogs";
 
 
 
@@ -12,11 +12,11 @@ let mapStateToProps = (state) =>{
 }
 let mapDispatchToProps = (dispatch) =>{
     return {
-        updateNewMessageBody: () =>{
-            dispatch(sendMessageCreator());
-        },
-        sendMessage: (body)=>{
+        updateNewMessageBody: (body) =>{
             dispatch(updateNewMessageBodyCreator(body));
+        },
+        sendMessage: ()=>{
+            dispatch(sendMessageCreator());
         }
     }
 }
