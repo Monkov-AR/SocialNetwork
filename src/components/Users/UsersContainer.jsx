@@ -1,9 +1,9 @@
 import React from "react";
 import { connect } from "react-redux";
-import { followActionCreator, setCurrentPageActionCreator, setUsersActionCreator, unfollowActionCreator } from "../../redux/usersReducer";
-
+import { followActionCreator, setCurrentPageActionCreator, setUsersActionCreator, toggleIsFetchingActionCreator, unfollowActionCreator } from "../../redux/usersReducer";
 import axios from "axios";
 import Users from "./Users";
+import preloader from "../../assets/images/preloader.svg"
 
 // смысл в чем 
 // было две обертки вокруг презетационной компоненты Users
@@ -32,34 +32,43 @@ class UsersContainer extends React.Component {
     //  на колько понял при создание объекта выполняется mount
     // если объект умирает то просходит unmount функция 
     componentDidMount() {
+        // когда пошел запрос на сервер устанавливает toggle(лоадер) в true типа крутись
+        this.props.toggleIsFetching(true)
         axios.get(`https://social-network.samuraijs.com/api/1.0/users?page=${this.props.currentPage}&count=${this.props.pageSize}`).then(response => {
+            // после загузки юзеров устанавливает загрузку в false
+            this.props.toggleIsFetching(false)                
             this.props.setUsers(response.data.items)
-
         });
     }
     onPageChanged = (pageNumber) => {
         this.props.setCurrentPage(pageNumber);
-        axios.get(`https://social-network.samuraijs.com/api/1.0/users?page=${pageNumber}&count=${this.props.pageSize}`).then(response => {  
-                this.props.setUsers(response.data.items)
-    
-            });
+        this.props.toggleIsFetching(true)
+        axios.get(`https://social-network.samuraijs.com/api/1.0/users?page=${pageNumber}&count=${this.props.pageSize}`).then(response => {
+            this.props.toggleIsFetching(false) 
+            this.props.setUsers(response.data.items)
+        });
     }
 
     render() {
-        return <Users totalUsersCount={this.props.totalUsersCount}
-        pageSize={this.props.pageSize}
-        currentPage= {this.props.currentPage}
-        onPageChanged={this.onPageChanged}
-        users={this.props.users}
-        />
-    }    
+        return <div>
+            {this.props.isFetching ? <img src={preloader} /> : null}
+            <Users totalUsersCount={this.props.totalUsersCount}
+                pageSize={this.props.pageSize}
+                currentPage={this.props.currentPage}
+                onPageChanged={this.onPageChanged}
+                users={this.props.users} />
+
+        </div>
+
+    }
 }
 let mapStateToProps = (state) => {
     return {
         users: state.usersPage.users,
         pageSize: state.usersPage.pageSize,
         totalUsersCount: state.usersPage.totalUsersCount,
-        currentPage: state.usersPage.currentPage
+        currentPage: state.usersPage.currentPage,
+        isFetching: state.usersPage.isFetching
     }
 }
 let mapDispatchToProps = (dispatch) => {
@@ -73,8 +82,11 @@ let mapDispatchToProps = (dispatch) => {
         setUsers: (users) => {
             dispatch(setUsersActionCreator(users))
         },
-        setCurrentPage:(pageNumber) =>{
+        setCurrentPage: (pageNumber) => {
             dispatch(setCurrentPageActionCreator(pageNumber))
+        },
+        toggleIsFetching:(isFetching) =>{
+            dispatch(toggleIsFetchingActionCreator(isFetching))
         }
     }
 }
