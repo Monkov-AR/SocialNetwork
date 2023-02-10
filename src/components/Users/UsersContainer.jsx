@@ -1,6 +1,12 @@
 import React from "react";
 import { connect } from "react-redux";
-import { followActionCreator, setCurrentPageActionCreator, setUsersActionCreator, toggleIsFetchingActionCreator, unfollowActionCreator } from "../../redux/usersReducer";
+import { 
+    follow, 
+    setCurrentPage, 
+    setUsers, 
+    toggleIsFetching, 
+    unfollow
+} from "../../redux/usersReducer";
 import axios from "axios";
 import Users from "./Users";
 import preloader from "../../assets/images/preloader.svg"
@@ -71,24 +77,36 @@ let mapStateToProps = (state) => {
         isFetching: state.usersPage.isFetching
     }
 }
-let mapDispatchToProps = (dispatch) => {
-    return {
-        follow: (userId) => {
-            dispatch(followActionCreator(userId))
-        },
-        unfollow: (userId) => {
-            dispatch(unfollowActionCreator(userId))
-        },
-        setUsers: (users) => {
-            dispatch(setUsersActionCreator(users))
-        },
-        setCurrentPage: (pageNumber) => {
-            dispatch(setCurrentPageActionCreator(pageNumber))
-        },
-        toggleIsFetching:(isFetching) =>{
-            dispatch(toggleIsFetchingActionCreator(isFetching))
-        }
-    }
-}
-
-export default connect(mapStateToProps, mapDispatchToProps)(UsersContainer);
+// новая фишка, не юзать mapDispatchToProps которая ретернит диспатчи
+// и посылать в коннект сразу объект с экшинами
+// let mapDispatchToProps = (dispatch) => {
+//     return {
+//         follow: (userId) => {
+//             dispatch(followActionCreator(userId))
+//         },
+//         unfollow: (userId) => {
+//             dispatch(unfollowActionCreator(userId))
+//         },
+//         setUsers: (users) => {
+//             dispatch(setUsersActionCreator(users))
+//         },
+//         setCurrentPage: (pageNumber) => {
+//             dispatch(setCurrentPageActionCreator(pageNumber))
+//         },
+//         toggleIsFetching:(isFetching) =>{
+//             dispatch(toggleIsFetchingActionCreator(isFetching))
+//         }
+//     }
+// }
+// export default connect(mapStateToProps, mapDispatchToProps)(UsersContainer);
+// новый код с без mapDispatchToProps
+// и еще одна фишка если убрать ActionCretaor отовсюду то можно вообще не исполльзовать 
+// синтаксиск follow: followActionCreator, а сразу -> follow
+// урок 58
+export default connect(mapStateToProps, {
+    follow,
+    unfollow,
+    setUsers,
+    setCurrentPage,
+    toggleIsFetching
+    })(UsersContainer);
