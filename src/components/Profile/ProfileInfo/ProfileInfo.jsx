@@ -2,7 +2,6 @@ import React from 'react'
 import preloader from "../../../assets/images/preloader.svg"
 
 const ProfileInfo = (props) => {
-    debugger
     if(!props.profile){
         return <img src={preloader} />
     }

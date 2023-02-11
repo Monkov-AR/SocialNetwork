@@ -46,11 +46,6 @@ const usersReducer = (state = initialState, action) => {
             }
         }
         case SET_USERS:{
-            //пока не понятная хуета, типа приходят новые пользователи мы их сетим,(при убирании хардкода)
-            //return { ...state, users: action.users}
-
-            //а пока берем текущий стейт и склеиваем с новым из action
-            debugger
             return { ...state, users: action.users}
         }
         case SET_CURRENT_PAGE:{
