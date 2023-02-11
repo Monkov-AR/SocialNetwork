@@ -11,5 +11,8 @@ let reducers = combineReducers({
 
 let store = createStore(reducers);
 
+//хрень чтобы в любой момент времени в косоле посмотреть весь стор
+// в косоле store.getState()
+window.store = store;
 
 export default store;
