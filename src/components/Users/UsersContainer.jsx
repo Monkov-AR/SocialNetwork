@@ -98,10 +98,12 @@ let mapStateToProps = (state) => {
 //         }
 //     }
 // }
+
 // export default connect(mapStateToProps, mapDispatchToProps)(UsersContainer);
 // новый код с без mapDispatchToProps
 // и еще одна фишка если убрать ActionCretaor отовсюду то можно вообще не исполльзовать 
 // синтаксиск follow: followActionCreator, а сразу -> follow
+// если в объекте есть одинаковые поля user = {name: name} то можно написать просто {name}
 // урок 58
 export default connect(mapStateToProps, {
     follow,

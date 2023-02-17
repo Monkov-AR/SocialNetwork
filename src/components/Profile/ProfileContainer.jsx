@@ -5,7 +5,7 @@ import {setUserProfile} from "../../redux/profileReducer"
 import { useParams } from 'react-router-dom'; 
 import Profile from "./Profile";
 
-// какой то  хреновый костыль  
+// какой то  хреновый костыль из урока 60  
 export function withRouter(Children){
     return(props)=>{
        const match  = {params: useParams()};
@@ -16,9 +16,14 @@ export function withRouter(Children){
 class ProfileContainer extends React.Component{
     
     componentDidMount(){
+        //при этом дебагере можно в консоле юзануть this.props 
+        //и увидеть пропсы текущего обьекта(в котором дебагер)
+        debugger
+
         // тут берется ИД из местной хуеты очередной обертки withRouter
         // которая древняя как говно мамонта и уже не используется
-        // если id пустой то берется дефолный 27905(ид бабы с картинкой)
+        // если id пустой то берется дефолный 27905(ид бабы с картинкой) 
+        //вообще типа должна быть собственная страница
         let userId = this.props.match.params.userId;
         if(!userId){
             userId = 27905;
